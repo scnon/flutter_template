@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -12,15 +13,18 @@ void main() {
 
   Get.log = Logger.getx;
   registerErrorHandler();
-  // android system bar
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
+
+  if (Platform.isAndroid) {
+    // android system bar
+    SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ),
-  );
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.transparent,
+    );
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  }
 
   runApp(const MainApp());
 }
